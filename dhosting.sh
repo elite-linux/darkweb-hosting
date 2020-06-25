@@ -52,6 +52,8 @@ function tor() {
 function nginxconfig(){
 	# sed -i '/# server_name_in_redirect/c\        server_name_in_redirect off;' $NGX_CONFIG_FILE
 	# sed -i '/# port_in_redirect/c\        port_in_redirect off;' $NGX_CONFIG_FILE
+	mv $NGX_CONFIG_FILE $NGX_CONFIG_FILE.bak
+	cp nginx.conf /etc/nginx/
 	echo " server { listen 127.0.0.1:80; root $WEBDIR; index index.html; server_name $HOSTNAME; } " > $NGX_AVAILABLE/deepweb
 	rm /etc/nginx/sites-enabled/default 2>/dev/null
 	rm /etc/nginx/sites-available/default 2>/dev/null
