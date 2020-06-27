@@ -8,7 +8,7 @@
 #: Checing if the the script is not run by certain privileges
 
 if [[ $EUID -ne 0 ]]; then
-	echo "This script must be run as root or sudo privileges" 
+	echo "This script must be run as root or sudo privileges"
 	exit 1
 fi
 
@@ -44,8 +44,8 @@ function tor() {
 	echo 'HiddenServiceDir /var/lib/tor/hidden_service/' >> $TORRC
 	echo 'HiddenServicePort 80 127.0.0.1:80' >> $TORRC
 	service tor restart
-	echo 
-	echo 'Your .onion linke is: ' $HOSTNAME
+	echo
+	echo 'Your .onion linke is: ' "$HOSTNAME"
 	echo
 }
 
@@ -61,16 +61,16 @@ function nginxconfig(){
 	systemctl restart nginx
 }
 
-function main() { 
-		banner 
-		required 
+function main() {
+		banner
+		required
 		tor
 		ufw allow 'nginx HTTP'
 		mkdir $WEBDIR 2>/dev/null
 		echo " <html><body><h1>Edit your html file at $WEBDIR/ </h1></body></html>" > $WEBDIR/index.html
 		chmod 755 $WEBDIR
 		nginxconfig
-		echo 'Open your torbrowser and access the link ' $HOSTNAME
+		echo 'Open your torbrowser and access the link ' "$HOSTNAME"
 }
 
 
